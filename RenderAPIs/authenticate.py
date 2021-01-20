@@ -1,5 +1,6 @@
 import urllib.parse
 from urllib.parse import urlencode
+import pycurl
        
 #Here is where the values will be authenticated 
 class AuthAPI():
@@ -31,7 +32,7 @@ class AuthAPI():
     x_url_callback = ''
     x_url_cancel = ''
     x_url_complete = ''
-    def render(self):
+    def createBodyString(self):
         body = {'x_account_id' : self.x_account_id,
                      'x_amount' : self.x_amount, 
                      'x_currency' : self.x_currency,
@@ -63,12 +64,23 @@ class AuthAPI():
                      }
 
         bodyString = urllib.parse.urlencode(body)        
-        signatureString = ''
+        signatureString = ""
 
         for chunk in (bodyString.split('&')):
             param = chunk.split('=')
             if (param and param[1] != ''): 
-                signatureString = signatureString . urldecode(param[0]) . urldecode(param[1]);
+                signatureString = signatureString + urldecode(param[0]) + urldecode(param[1]);
     
 
-        pb_sig = hash_hmac('sha256', signatureString, 'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR'); 
+        pb_sig = hash_hmac('sha256', signatureString, 'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR')
+        bodyString = bodyString + "&x_signature=" + pb_sig
+        return bodyString
+    
+    def render(self, bodyString):
+        url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'
+        req = urllib2.Request(url, bodyString) 
+        response = urllib2.urlopen(req) 
+        page = response.read()
+        print (page + '\n\n')
+        
+        
