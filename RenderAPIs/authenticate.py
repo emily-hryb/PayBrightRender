@@ -1,6 +1,9 @@
 import urllib.parse
 from urllib.parse import urlencode
 from urllib import request
+import hmac
+import hashlib 
+import binascii
        
 #Here is where the values will be authenticated 
 class AuthAPI():
@@ -69,10 +72,9 @@ class AuthAPI():
         for chunk in (bodyString.split('&')):
             param = chunk.split('=')
             if (param and param[1] != ''): 
-                signatureString = signatureString + urldecode(param[0]) + urldecode(param[1]);
-    
-
-        pb_sig = hash_hmac('sha256', signatureString, 'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR')
+                signatureString = signatureString + urldecode(param[0]) + urldecode(param[1])    
+        
+        pb_sig = hmac.new("'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR'", signatureString, hashlib.sha256).hexdigest()        
         bodyString = bodyString + "&x_signature=" + pb_sig
         return bodyString
     
