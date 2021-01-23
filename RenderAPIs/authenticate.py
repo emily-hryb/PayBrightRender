@@ -1,6 +1,5 @@
 import urllib.parse
 from urllib.parse import urlencode
-import pycurl
        
 #Here is where the values will be authenticated 
 class AuthAPI():
