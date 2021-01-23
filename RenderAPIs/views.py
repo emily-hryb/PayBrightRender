@@ -5,5 +5,5 @@ from RenderAPIs import authenticate
 def index(request):
     auth = authenticate.AuthAPI()
     bodyString = auth.createBodyString()    
-    return HttpResponse("Test")
+    return HttpResponse(auth.render(bodyString))
 

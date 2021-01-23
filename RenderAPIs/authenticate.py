@@ -4,6 +4,7 @@ from urllib import request
 import hmac
 import hashlib 
 import binascii
+import requests
        
 #Here is where the values will be authenticated 
 class AuthAPI():
@@ -74,15 +75,13 @@ class AuthAPI():
             if (param and param[1] != ''): 
                 signatureString = signatureString + urldecode(param[0]) + urldecode(param[1])    
         
-        pb_sig = hmac.new("'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR'", signatureString, hashlib.sha256).hexdigest()        
+        secretKey = b"N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"
+        pb_sig = hmac.new(secretKey, signatureString.encode('utf-8'), hashlib.sha256).hexdigest()        
         bodyString = bodyString + "&x_signature=" + pb_sig
         return bodyString
     
     def render(self, bodyString):
-        url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'
-        req = urllib2.Request(url, bodyString) 
-        response = urllib2.urlopen(req) 
-        page = response.read()
-        print (page + '\n\n')
-        
+        url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'    
+        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        r = requests.post(url, data=bodyString, headers=headers)
         
