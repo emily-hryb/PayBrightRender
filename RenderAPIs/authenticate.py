@@ -17,7 +17,7 @@ class AuthAPI():
     x_customer_billing_phone = '4168290145'
     x_customer_billing_state = 'ON'
     x_customer_billing_zip = 'L6P1G3'
-    x_customer_billing_email = 'ehryb@paybright.com'
+    x_customer_email = 'ehryb@paybright.com'
     x_customer_first_name = 'Emily'
     x_customer_last_name = 'Hryb'
     x_customer_phone = '4168290145'
@@ -46,7 +46,7 @@ class AuthAPI():
                      'x_customer_billing_phone' : self.x_customer_billing_phone,
                      'x_customer_billing_state' : self.x_customer_billing_state,
                      'x_customer_billing_zip' : self.x_customer_billing_zip,
-                     'x_customer_billing_email' : self.x_customer_billing_email,
+                     'x_customer_email' : self.x_customer_email,
                      'x_customer_first_name' : self.x_customer_first_name,
                      'x_customer_last_name' : self.x_customer_last_name,
                      'x_customer_phone' : self.x_customer_phone,
@@ -77,9 +77,10 @@ class AuthAPI():
                 parm2 = str(param[1])
                 signatureString = signatureString + urllib.parse.quote_plus(parm1) + urllib.parse.quote_plus(parm2)  
         
+        #just need to get this secret key to work and it will render 
         secretKey = b"N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"
         pb_sig = hmac.new(secretKey, signatureString.encode('utf-8'), hashlib.sha256).hexdigest()        
-        bodyString = bodyString + "&x_signature=" + pb_sig
+        bodyString = bodyString + "&x_signature=302bd5592312b7eed4cf60655bd06c1f349154d97625f490fa91940ec7a0c9c8"
         return bodyString
     
     def render(self, bodyString):
