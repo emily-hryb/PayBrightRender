@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 from urllib import request
 import hmac
 import hashlib 
-import binascii
+import base64
 import requests
        
 #Here is where the values will be authenticated 
@@ -77,11 +77,15 @@ class AuthAPI():
                 parm2 = str(param[1])
                 signatureString = signatureString + urllib.parse.quote_plus(parm1) + urllib.parse.quote_plus(parm2)  
         
-        #just need to get this secret key to work and it will render 
-        secretKey = b"N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"
-        pb_sig = hmac.new(secretKey, signatureString.encode('utf-8'), hashlib.sha256).hexdigest()        
-        bodyString = bodyString + "&x_signature=302bd5592312b7eed4cf60655bd06c1f349154d97625f490fa91940ec7a0c9c8"
-        return bodyString
+        secretKey = "N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"         
+        pb_sig = hmac.new(bytes(secretKey , 'utf-8'), bytes(signatureString, 'utf-8'), hashlib.sha256).hexdigest()        
+        #bodyString = bodyString + "&x_signature=" + pb_sig
+        customer_id = 123456
+        nonce = 1
+        api_key = 'thapikey'
+
+        message = '{} {} {}'.format(nonce, customer_id, api_key)
+        return pb_sig
     
     def render(self, bodyString):
         url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'    
