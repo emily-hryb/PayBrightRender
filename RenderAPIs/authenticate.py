@@ -1,3 +1,4 @@
+from RenderAPIs import php
 import urllib.parse
 from urllib.parse import urlencode
 from urllib import request
@@ -78,13 +79,9 @@ class AuthAPI():
                 signatureString = signatureString + urllib.parse.quote_plus(parm1) + urllib.parse.quote_plus(parm2)  
         
         secretKey = "N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"         
-        pb_sig = hmac.new(bytes(secretKey , 'utf-8'), bytes(signatureString, 'utf-8'), hashlib.sha256).hexdigest()        
+        pb_sig = hmac.new(b'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR', bytes(signatureString, 'utf-8'), hashlib.sha256).hexdigest()        
         #bodyString = bodyString + "&x_signature=" + pb_sig
-        customer_id = 123456
-        nonce = 1
-        api_key = 'thapikey'
-
-        message = '{} {} {}'.format(nonce, customer_id, api_key)
+        
         return pb_sig
     
     def render(self, bodyString):
