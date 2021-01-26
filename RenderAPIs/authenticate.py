@@ -1,4 +1,4 @@
-
+import binascii
 import urllib.parse
 from urllib.parse import urlencode
 from urllib import request
@@ -67,22 +67,27 @@ class AuthAPI():
                      'x_url_cancel' : self.x_url_cancel,
                      'x_url_complete' : self.x_url_complete
                      }
-
-        bodyString = urllib.parse.urlencode(body)        
+        bodyAsString = ""
+        for element in body:
+            bodyAsString = bodyAsString + element + body[element]
+       
+        bodyEncoded = urllib.parse.urlencode(body)         
         signatureString = ""
+        signatureStringDecoded = ""
 
-        for chunk in (bodyString.split('&')):
+        for chunk in (bodyEncoded.split('&')):
             param = chunk.split('=')
             if (param and param[1] != ''): 
-                parm1 = str(param[0])
-                parm2 = str(param[1])
-                signatureString = signatureString + urllib.parse.quote_plus(parm1) + urllib.parse.quote_plus(parm2)  
+                parm1 = urllib.parse.quote_plus(param[0])
+                parm2 = urllib.parse.quote_plus(param[1])
+                signatureString = signatureString + parm1 + parm2                 
         
-        secretKey = "N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"         
-        pb_sig = hmac.new(b'N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR', bytes(signatureString, 'utf-8'), hashlib.sha256).hexdigest()        
-        #bodyString = bodyString + "&x_signature=" + pb_sig
+        secretKey = "N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"        
         
-        return pb_sig
+        pb_sig = hmac.new(bytes(secretKey, 'utf-8'), bodyAsString.encode('utf-8'), hashlib.sha256).hexdigest()        
+        bodyEncoded = bodyEncoded + "&x_signature=" + pb_sig
+        
+        return bodyEncoded
     
     def render(self, bodyString):
         url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'    
