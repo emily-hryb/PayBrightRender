@@ -55,7 +55,7 @@ ROOT_URLCONF = 'PayBrightRender.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['RenderAPIs\html'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
