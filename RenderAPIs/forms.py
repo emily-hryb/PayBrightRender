@@ -1,4 +1,5 @@
 from django import forms
 
-class NameForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
+class InputForm(forms.Form):
+     api_key = forms.CharField(label='The Sandbox API Key:', max_length=100)
+     api_token = forms.CharField(label='The Sandbox API Token:', max_length=100)
