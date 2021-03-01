@@ -9,7 +9,7 @@ def index(request):
     #auth = authenticate.AuthAPI()
     #bodyString = auth.createBodyString()  
     #pageRender = auth.render(bodyString) 
-    return HttpResponse("Index Page")
+    return HttpResponse("Main Page. See /input to add info")
 
 def thanks(request):
     return HttpResponse("Thank you for your input")
