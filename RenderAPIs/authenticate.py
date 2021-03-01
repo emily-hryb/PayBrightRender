@@ -6,10 +6,11 @@ import hmac
 import hashlib 
 import base64
 import requests
+from . import views
        
 #Here is where the values will be authenticated 
 class AuthAPI():
-    x_account_id = 'eC5TYJ4MRWjjj1wWe5wX9djMPmSvB6x6QSsR5LWX51fGbLcC4u'
+    x_account_id = ''
     x_amount = '800.00'
     x_currency = 'CAD'
     x_customer_billing_address1 = '9 Pali Drive'
@@ -37,7 +38,7 @@ class AuthAPI():
     x_url_callback = 'https://fizz.ca/en'
     x_url_cancel = 'https://fizz.ca/en'
     x_url_complete = 'https://fizz.ca/en'
-    def createBodyString(self):
+    def createBodyString(self, key):
         body = {'x_account_id' : self.x_account_id,
                      'x_amount' : self.x_amount, 
                      'x_currency' : self.x_currency,
