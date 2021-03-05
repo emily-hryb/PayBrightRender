@@ -5,16 +5,7 @@ from django.http import HttpResponseRedirect
 from RenderAPIs import forms
 
 
-def index(request):
-    #auth = authenticate.AuthAPI()
-    #bodyString = auth.createBodyString()  
-    #pageRender = auth.render(bodyString) 
-    return HttpResponse("Main Page. See /input to add info")
-
-def thanks(request):
-    return HttpResponse("Thank you for your input")
-
-def get_input(request):
+def index(request):    
     # if this is a POST request we need to process the form data
     submitbutton= request.POST.get("submit")
     key = ""
@@ -27,14 +18,24 @@ def get_input(request):
         # process the data in form.cleaned_data as required
         # ...
         key = form.cleaned_data.get("api_key")
-        token = form.cleaned_data.get("api_token")                        
+        token = form.cleaned_data.get("api_token")                     
         
         auth = authenticate.AuthAPI()
-        bodyString = auth.createBodyString(key)  
+        bodyString = auth.createBodyString()  
         pageRender = auth.render(bodyString) 
+        return HttpResponse(pageRender)
+        
     # if a GET (or any other method) we'll create a blank form
     else:
         form = forms.InputForm()
 
     context= {'form': form, 'api_key': key, 'api_token':token,'submitbutton': submitbutton}
     return render(request, 'main_page.html', context)
+
+def thanks(request):
+    return HttpResponse("Thank you for your input")
+
+    
+
+
+    
