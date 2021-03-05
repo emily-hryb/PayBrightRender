@@ -10,7 +10,7 @@ from . import views
        
 #Here is where the values will be authenticated 
 class AuthAPI():
-    x_account_id = 'eC5TYJ4MRWjjj1wWe5wX9djMPmSvB6x6QSsR5LWX51fGbLcC4u'
+    x_account_id = ''
     x_amount = '800.00'
     x_currency = 'CAD'
     x_customer_billing_address1 = '9 Pali Drive'
@@ -38,8 +38,8 @@ class AuthAPI():
     x_url_callback = 'https://fizz.ca/en'
     x_url_cancel = 'https://fizz.ca/en'
     x_url_complete = 'https://fizz.ca/en'
-    def createBodyString(self):
-        body = {'x_account_id' : self.x_account_id,
+    def createBodyString(self, key, token):
+        body = {'x_account_id' : key,
                      'x_amount' : self.x_amount, 
                      'x_currency' : self.x_currency,
                      'x_customer_billing_address1' : self.x_customer_billing_address1,
@@ -83,7 +83,7 @@ class AuthAPI():
                 parm2 = urllib.parse.quote_plus(param[1])
                 signatureString = signatureString + parm1 + parm2                 
         
-        secretKey = "N88G3X1zPKkSEG1xdQGV7Bfy4OmJ1IMteX9CtmnwSU7VWgBzJR"        
+        secretKey = token       
         
         pb_sig = hmac.new(bytes(secretKey, 'utf-8'), bodyAsString.encode('utf-8'), hashlib.sha256).hexdigest()        
         bodyEncoded = bodyEncoded + "&x_signature=" + pb_sig

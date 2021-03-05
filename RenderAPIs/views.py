@@ -21,7 +21,7 @@ def index(request):
         token = form.cleaned_data.get("api_token")                     
         
         auth = authenticate.AuthAPI()
-        bodyString = auth.createBodyString()  
+        bodyString = auth.createBodyString(key, token)  
         pageRender = auth.render(bodyString) 
         return HttpResponse(pageRender)
         
