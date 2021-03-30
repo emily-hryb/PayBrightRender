@@ -1,0 +1,10 @@
+2021-03-23 12:57:00,480 DEBUG:Starting new HTTPS connection (1): sandbox.paybright.com:443
+2021-03-23 12:57:02,239 DEBUG:https://sandbox.paybright.com:443 "POST /CheckOut/ApplicationForm.aspx HTTP/1.1" 200 11646
+2021-03-23 12:57:02,250 DEBUG:<Response [200]>
+2021-03-23 12:57:02,537 WARNING:Not Found: /RenderAPIs/MDBootstrap/mdb.min.css
+2021-03-23 12:57:02,544 WARNING:Not Found: /VirtualCredit/EN/Scripts/jquery.mask.min.js
+2021-03-23 12:57:02,549 WARNING:Not Found: /css/AutoComplete.css
+2021-03-23 12:57:02,553 WARNING:Not Found: /ScriptResource.axd
+2021-03-23 12:57:02,557 WARNING:Not Found: /RenderAPIs/css/application.css
+2021-03-23 12:57:02,564 WARNING:Not Found: /js/AutoComplete.js
+2021-03-23 12:57:02,599 WARNING:Not Found: /RenderAPIs/images/loader.gif

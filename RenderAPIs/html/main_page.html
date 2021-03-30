@@ -1,11 +1,17 @@
 <head>
 <meta charset="UTF-8">
-<title>User Information Form</title>
+<title>Main Page</title>
 </head>
 <body>
-<form action="" method="POST">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="Submit" name="submit" value="Submit"/>
-</form>
+<h1>Select Type of Action</h1>
+<button id="auth" onclick="window.location.href='authenticate'">Authenticate</button>
+<br>
+<br>
+<button id="capture" onclick="window.location.href='capture'">Capture</button>
+<br>
+<br>
+<button id="void" onclick="window.location.href='void'">Void</button>
+<br>
+<br>
+<button id="refund" onclick="window.location.href='refund'">Refund</button>
 </body>

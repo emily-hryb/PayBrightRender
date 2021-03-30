@@ -7,6 +7,7 @@ import hashlib
 import base64
 import requests
 from . import views
+import logging
        
 #Here is where the values will be authenticated 
 class AuthAPI():
@@ -31,13 +32,14 @@ class AuthAPI():
     x_customer_shipping_phone = '4168290145'
     x_customer_shipping_state = 'ON'
     x_customer_shipping_zip = 'L6P1G3'
+    x_locale = 'en'
     x_reference = '680013618833'
     x_shop_country = 'CA'
     x_shop_name = 'Carlton'
     x_test = 'true'
-    x_url_callback = 'https://fizz.ca/en'
-    x_url_cancel = 'https://fizz.ca/en'
-    x_url_complete = 'https://fizz.ca/en'
+    x_url_callback = 'https://google.com'
+    x_url_cancel = 'https://google.com'
+    x_url_complete = 'https://google.com'
     def createBodyString(self, key, token):
         body = {'x_account_id' : key,
                      'x_amount' : self.x_amount, 
@@ -60,6 +62,7 @@ class AuthAPI():
                      'x_customer_shipping_phone' : self.x_customer_shipping_phone,
                      'x_customer_shipping_state' : self.x_customer_shipping_state,
                      'x_customer_shipping_zip' : self.x_customer_shipping_zip,
+                     'x_locale' : self.x_locale,
                      'x_reference' : self.x_reference,
                      'x_shop_country' : self.x_shop_country,
                      'x_shop_name' : self.x_shop_name,
@@ -91,8 +94,10 @@ class AuthAPI():
         return bodyEncoded
     
     def render(self, bodyString):
+        logging.basicConfig(level=logging.DEBUG, filename='myapp.log', format='%(asctime)s %(levelname)s:%(message)s')
         url = 'https://sandbox.paybright.com/CheckOut/ApplicationForm.aspx'    
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         r = requests.post(url, data=bodyString, headers=headers)
+        logging.debug(r)
         return r
         
